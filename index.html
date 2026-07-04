@@ -1,51 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Website Builder</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<h1>AI Website Builder</h1>
-
-<textarea id="prompt" placeholder="Type your website idea..."></textarea>
-<button onclick="generate()">Generate</button>
-
-<div id="output"></div>
-
-<script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
   <title>Reyansh AI Builder</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
+<h1>💎 Reyansh AI Builder</h1>
 
-  <h1>💎 AI Website Builder</h1>
+<input id="name" placeholder="Your Name">
+<button onclick="start()">Start</button>
 
-  <p>Enter your idea and generate a website using AI</p>
-
-  <textarea id="prompt" placeholder="Example: Make a gym website with modern design"></textarea>
-
-  <button onclick="generate()">Generate Website</button>
-
-  <h2>Preview</h2>
-
-  <iframe id="preview"></iframe>
-
-  <div class="actions">
-    <button onclick="downloadHTML()">Download HTML</button>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
+<script>
+function start(){
+  const name = document.getElementById("name").value;
+  localStorage.setItem("user", name);
+  window.location.href = "dashboard.html";
+}
+</script>
 
 </body>
-  </html>
+</html>
