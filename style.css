@@ -8,3 +8,57 @@ textarea {
   width: 80%;
   height: 100px;
 }
+/* ==========================
+   Reyansh AI Builder
+   Professional UI
+========================== */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#0f172a;
+  color:#fff;
+}
+
+.container{
+  width:90%;
+  max-width:1200px;
+  margin:auto;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 0;
+}
+
+header h1{
+  color:#38bdf8;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+}
+
+.hero{
+  text-align:center;
+  padding:60px 20px;
+}
+
+.hero h2{
+  font-size:40px;
+  margin-bottom:20px;
+}
+
+.hero p{
+  color:#cbd5e1;
+  margin-bottom:30px;
+}
