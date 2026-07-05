@@ -1,95 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AI Website Builder</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💎 Reyansh AI Builder</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>AI Website Builder</h1>
+<header class="header">
+    <div class="container">
+        <h1>💎 Reyansh AI Builder</h1>
 
-<textarea id="prompt" placeholder="Type your website idea..."></textarea>
-<button onclick="generate()">Generate</button>
-
-<div id="output"></div>
-
-<script src="script.js"></script>
-</body>
-</html>
-<!-- ==========================
-     Header
-========================== -->
-
-<header>
-  <div class="container">
-    <h1>💎 Reyansh AI Builder</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Features</a>
-      <a href="#">Templates</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
-    </nav>
-  </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Features</a>
+            <a href="#">Templates</a>
+            <a href="#">Pricing</a>
+            <a href="#">Contact</a>
+        </nav>
+    </div>
 </header>
 
-<!-- ==========================
-     Hero Section
-========================== -->
-
 <section class="hero container">
-  <h2>Build Modern Websites with AI</h2>
 
-  <p>
-    Describe your idea and generate beautiful websites
-    using Artificial Intelligence.
-  </p>
+    <h2>Build Modern Websites with AI</h2>
 
-  <textarea
-    id="prompt"
-    placeholder="Example: Create a modern e-commerce website">
-  </textarea>
+    <p>Create Modern Websites with AI Prompts</p>
 
-  <button onclick="generate()">
-    🚀 Generate Website
-  </button>
+    <textarea
+        id="prompt"
+        placeholder="Example: Create a modern e-commerce website">
+    </textarea>
+
+    <br><br>
+
+    <button onclick="generate()">
+        🚀 Generate Website
+    </button>
+
 </section>
-
-<!-- ==========================
-     Preview
-========================== -->
 
 <section class="container">
-  <h2>Live Preview</h2>
 
-  <iframe id="preview"></iframe>
+    <h2>Live Preview</h2>
+
+    <iframe
+        id="preview"
+        width="100%"
+        height="600">
+    </iframe>
+
 </section>
-
-<!-- ==========================
-     Features
-========================== -->
 
 <section class="features container">
 
-  <div class="card">
-    <h3>🤖 AI Generator</h3>
-    <p>Generate complete websites using AI prompts.</p>
-  </div>
+    <div class="card">
+        <h3>🤖 AI Generator</h3>
+        <p>Generate complete websites using AI prompts.</p>
+    </div>
 
-  <div class="card">
-    <h3>⚡ Live Preview</h3>
-    <p>Instantly preview generated websites.</p>
-  </div>
+    <div class="card">
+        <h3>⚡ Live Preview</h3>
+        <p>Preview websites instantly.</p>
+    </div>
 
-  <div class="card">
-    <h3>☁️ One Click Deploy</h3>
-    <p>Deploy projects easily with Vercel.</p>
-  </div>
+    <div class="card">
+        <h3>☁️ Deploy</h3>
+        <p>Deploy to GitHub and Vercel.</p>
+    </div>
 
 </section>
 
 <footer>
-  <p>© 2026 Reyansh AI Builder. All Rights Reserved.</p>
+
+    <p>© 2026 Reyansh AI Builder. All Rights Reserved.</p>
+
 </footer>
 
 <script src="script.js"></script>
+
+</body>
+</html>
