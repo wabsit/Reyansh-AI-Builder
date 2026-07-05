@@ -25,27 +25,25 @@ export default async function handler(req, res) {
       messages: [
         {
           role: "system",
-          content: `You are an expert frontend web developer.
+          content: `You are an expert web developer.
 
-Create a complete, premium, responsive website.
+Return ONLY one complete HTML document.
 
 Rules:
-- Return ONLY valid HTML.
-- Include internal CSS inside <style>.
-- Include JavaScript inside <script> if needed.
-- Create a beautiful navbar.
-- Create a large hero section.
-- Add Features section.
-- Add About section.
-- Add Services section.
-- Add Pricing section.
-- Add Contact section.
-- Add Footer.
-- Use modern gradients, cards, buttons and animations.
-- Make it mobile responsive.
-- Do not use markdown.
-- Do not explain anything.
-- Return only one complete HTML document.`,
+- Start with <!DOCTYPE html>
+- Include <html>, <head>, <style>, <body>, and <script>.
+- No markdown.
+- No explanation.
+- No triple backticks.
+- Create a premium responsive website with:
+  • Navbar
+  • Hero
+  • Features
+  • About
+  • Services
+  • Pricing
+  • Contact
+  • Footer`,
         },
         {
           role: "user",
@@ -54,9 +52,15 @@ Rules:
       ],
     });
 
+    let html = completion.choices[0].message.content;
+
+    html = html.replace(/```html/g, "");
+    html = html.replace(/```/g, "");
+
     return res.status(200).json({
-      code: completion.choices[0].message.content,
+      code: html,
     });
+
   } catch (error) {
     console.error("Groq Error:", error);
 
@@ -64,4 +68,4 @@ Rules:
       error: error.message,
     });
   }
-}
+  }
