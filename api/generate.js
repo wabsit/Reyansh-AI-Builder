@@ -6,56 +6,50 @@ const groq = new Groq({
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method Not Allowed",
-    });
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 
   try {
     const { prompt } = req.body;
 
-    if (!prompt) {
-      return res.status(400).json({
-        error: "Prompt is required",
-      });
-    }
-
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      temperature: 0.3,
+      temperature: 0,
       messages: [
         {
           role: "system",
-          content: "Return ONLY a complete HTML document. Start with <!DOCTYPE html>. Do not use markdown. Do not use ```html. Include CSS inside <style> and JavaScript inside <script>."
+          content: `You are a professional frontend developer.
+
+IMPORTANT RULES:
+1. Return ONLY valid HTML.
+2. The FIRST line MUST be <!DOCTYPE html>
+3. Do NOT use Markdown.
+4. Do NOT use # headings.
+5. Do NOT use bullet points.
+6. Do NOT use triple backticks.
+7. Include CSS inside <style>.
+8. Include JavaScript inside <script>.
+9. Create a beautiful responsive website.
+10. End with </html>.`
         },
         {
           role: "user",
-          content: `Create a professional responsive website for: ${prompt}`
+          content: prompt
         }
       ]
     });
 
-    let html = completion.choices[0].message.content || "";
+    let html = completion.choices[0].message.content.trim();
 
-    html = html
-      .replace(/```html/gi, "")
-      .replace(/```/g, "")
-      .trim();
+    // अगर मॉडल Markdown भेज दे तो उसे हटा दें
+    html = html.replace(/```html/gi, "").replace(/```/g, "").trim();
 
+    // अगर HTML नहीं है, तो error दिखाएँ
     if (!html.startsWith("<!DOCTYPE html>")) {
-      html = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Generated Website</title>
-<style>
-body{font-family:Arial;padding:40px;}
-</style>
-</head>
-<body>
-${html}
-</body>
-</html>`;
+      return res.status(500).json({
+        error: "Model returned Markdown instead of HTML.",
+        code: html
+      });
     }
 
     return res.status(200).json({
@@ -63,7 +57,7 @@ ${html}
     });
 
   } catch (error) {
-    console.error("Groq Error:", error);
+    console.error(error);
 
     return res.status(500).json({
       error: error.message
