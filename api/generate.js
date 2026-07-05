@@ -22,50 +22,51 @@ export default async function handler(req, res) {
 
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
+      temperature: 0.3,
       messages: [
         {
           role: "system",
-          content: `You are an expert web developer.
-
-Return ONLY one complete HTML document.
-
-Rules:
-- Start with <!DOCTYPE html>
-- Include <html>, <head>, <style>, <body>, and <script>.
-- No markdown.
-- No explanation.
-- No triple backticks.
-- Create a premium responsive website with:
-  • Navbar
-  • Hero
-  • Features
-  • About
-  • Services
-  • Pricing
-  • Contact
-  • Footer`,
+          content: "Return ONLY a complete HTML document. Start with <!DOCTYPE html>. Do not use markdown. Do not use ```html. Include CSS inside <style> and JavaScript inside <script>."
         },
         {
           role: "user",
-          content: prompt,
-        },
-      ],
+          content: `Create a professional responsive website for: ${prompt}`
+        }
+      ]
     });
 
-    let html = completion.choices[0].message.content;
+    let html = completion.choices[0].message.content || "";
 
-    html = html.replace(/```html/g, "");
-    html = html.replace(/```/g, "");
+    html = html
+      .replace(/```html/gi, "")
+      .replace(/```/g, "")
+      .trim();
+
+    if (!html.startsWith("<!DOCTYPE html>")) {
+      html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Generated Website</title>
+<style>
+body{font-family:Arial;padding:40px;}
+</style>
+</head>
+<body>
+${html}
+</body>
+</html>`;
+    }
 
     return res.status(200).json({
-      code: html,
+      code: html
     });
 
   } catch (error) {
     console.error("Groq Error:", error);
 
     return res.status(500).json({
-      error: error.message,
+      error: error.message
     });
   }
-  }
+}    
