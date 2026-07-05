@@ -6,31 +6,62 @@ const groq = new Groq({
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({
+      error: "Method Not Allowed",
+    });
   }
 
   try {
     const { prompt } = req.body;
 
+    if (!prompt) {
+      return res.status(400).json({
+        error: "Prompt is required",
+      });
+    }
+
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [
         {
+          role: "system",
+          content: `You are an expert frontend web developer.
+
+Create a complete, premium, responsive website.
+
+Rules:
+- Return ONLY valid HTML.
+- Include internal CSS inside <style>.
+- Include JavaScript inside <script> if needed.
+- Create a beautiful navbar.
+- Create a large hero section.
+- Add Features section.
+- Add About section.
+- Add Services section.
+- Add Pricing section.
+- Add Contact section.
+- Add Footer.
+- Use modern gradients, cards, buttons and animations.
+- Make it mobile responsive.
+- Do not use markdown.
+- Do not explain anything.
+- Return only one complete HTML document.`,
+        },
+        {
           role: "user",
-          content: `Create a complete HTML website with internal CSS only. Do not use markdown. Website idea: ${prompt}`
-        }
-      ]
+          content: prompt,
+        },
+      ],
     });
 
     return res.status(200).json({
-      code: completion.choices[0].message.content
+      code: completion.choices[0].message.content,
     });
-
   } catch (error) {
     console.error("Groq Error:", error);
 
     return res.status(500).json({
-      error: error.message
+      error: error.message,
     });
   }
 }
