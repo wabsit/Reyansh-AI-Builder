@@ -54,7 +54,10 @@ Rules:
 
     const response = completion.choices[0].message.content.trim();
 
-    let html = "";
+console.log("AI Response:");
+console.log(response);
+
+let html = ""; 
         try {
       const parsed = JSON.parse(response);
       html = parsed.html;
