@@ -5,45 +5,52 @@ const groq = new Groq({
 });
 
 export default async function handler(req, res) {
+
   if (req.method !== "POST") {
     return res.status(405).json({
-      error: "Method Not Allowed",
+      error: "Method Not Allowed"
     });
   }
 
   try {
+
     const { prompt } = req.body;
 
     if (!prompt) {
       return res.status(400).json({
-        error: "Prompt is required",
+        error: "Prompt is required"
       });
     }
 
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      temperature: 0.2,
+      temperature: 0.3,
       messages: [
         {
           role: "system",
-          content: `You are an expert frontend developer.
+          content: `
+You are an expert frontend developer.
 
-Return ONLY valid JSON.
-
-Format:
-
-{
-  "html":"<!DOCTYPE html>...</html>"
-}
+Return ONLY complete HTML.
 
 Rules:
-- Return JSON only.
-- html must start with <!DOCTYPE html>
-- No markdown.
-- No explanation.
+- Start with <!DOCTYPE html>
+- End with </html>
+- Do NOT use Markdown.
+- Do NOT use # headings.
+- Do NOT use bullet lists.
 - Include CSS inside <style>.
 - Include JavaScript inside <script>.
-- Create a modern responsive website with Navbar, Hero, Features, About, Services, Pricing, Contact and Footer.`
+- Create a beautiful responsive website with:
+Navbar,
+Hero,
+Features,
+About,
+Services,
+Pricing,
+Contact,
+Footer.
+`
         },
         {
           role: "user",
@@ -52,44 +59,47 @@ Rules:
       ]
     });
 
-    const response = completion.choices[0].message.content.trim();
-
-console.log("AI Response:");
-console.log(response);
-
-let html = ""; 
-        try {
-      const parsed = JSON.parse(response);
-      html = parsed.html;
-    } catch (e) {
-      console.error("JSON Parse Error:", e);
-
-      return res.status(500).json({
-        error: "AI returned invalid JSON",
-        raw: response
-      });
-    }
-
-    if (!html) {
-      return res.status(500).json({
-        error: "No HTML generated"
-      });
-    }
+    let html = completion.choices[0].message.content.trim();
 
     html = html
       .replace(/```html/gi, "")
       .replace(/```/g, "")
       .trim();
+       if (!html.toLowerCase().startsWith("<!doctype html")) {
+      html = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generated Website</title>
+<style>
+body{
+  font-family:Arial,sans-serif;
+  max-width:900px;
+  margin:40px auto;
+  padding:20px;
+  line-height:1.7;
+}
+</style>
+</head>
+<body>
+${html}
+</body>
+</html>`;
+    }
 
     return res.status(200).json({
       code: html
     });
 
   } catch (error) {
+
     console.error("Groq Error:", error);
 
     return res.status(500).json({
-      error: error.message
+      error: error.message || "Failed to generate website"
     });
+
   }
-        }
+          } 
