@@ -8,6 +8,7 @@ async function generate() {
     }
 
     try {
+
         const response = await fetch("/api/generate", {
             method: "POST",
             headers: {
@@ -18,11 +19,22 @@ async function generate() {
 
         const data = await response.json();
 
+        console.log(data);
+
+        if (data.error) {
+            document.getElementById("preview").srcdoc =
+                "<h2 style='color:red;text-align:center'>" + data.error + "</h2>";
+            return;
+        }
+
         document.getElementById("preview").srcdoc = data.code;
 
     } catch (error) {
+
+        console.error(error);
+
         document.getElementById("preview").srcdoc =
             "<h2 style='color:red;text-align:center'>Error loading AI response</h2>";
-        console.error(error);
+
     }
 }
