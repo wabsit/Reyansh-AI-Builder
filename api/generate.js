@@ -6,31 +6,44 @@ const groq = new Groq({
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
+    return res.status(405).json({
+      error: "Method Not Allowed",
+    });
   }
 
   try {
     const { prompt } = req.body;
 
+    if (!prompt) {
+      return res.status(400).json({
+        error: "Prompt is required",
+      });
+    }
+
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      temperature: 0,
+      temperature: 0.2,
       messages: [
         {
           role: "system",
-          content: `You are a professional frontend developer.
+          content: `You are an expert frontend developer.
 
-IMPORTANT RULES:
-1. Return ONLY valid HTML.
-2. The FIRST line MUST be <!DOCTYPE html>
-3. Do NOT use Markdown.
-4. Do NOT use # headings.
-5. Do NOT use bullet points.
-6. Do NOT use triple backticks.
-7. Include CSS inside <style>.
-8. Include JavaScript inside <script>.
-9. Create a beautiful responsive website.
-10. End with </html>.`
+Return ONLY valid JSON.
+
+Format:
+
+{
+  "html":"<!DOCTYPE html>...</html>"
+}
+
+Rules:
+- Return JSON only.
+- html must start with <!DOCTYPE html>
+- No markdown.
+- No explanation.
+- Include CSS inside <style>.
+- Include JavaScript inside <script>.
+- Create a modern responsive website with Navbar, Hero, Features, About, Services, Pricing, Contact and Footer.`
         },
         {
           role: "user",
@@ -39,28 +52,41 @@ IMPORTANT RULES:
       ]
     });
 
-    let html = completion.choices[0].message.content.trim();
+    const response = completion.choices[0].message.content.trim();
 
-    // अगर मॉडल Markdown भेज दे तो उसे हटा दें
-    html = html.replace(/```html/gi, "").replace(/```/g, "").trim();
+    let html = "";
+        try {
+      const parsed = JSON.parse(response);
+      html = parsed.html;
+    } catch (e) {
+      console.error("JSON Parse Error:", e);
 
-    // अगर HTML नहीं है, तो error दिखाएँ
-    if (!html.startsWith("<!DOCTYPE html>")) {
       return res.status(500).json({
-        error: "Model returned Markdown instead of HTML.",
-        code: html
+        error: "AI returned invalid JSON",
+        raw: response
       });
     }
+
+    if (!html) {
+      return res.status(500).json({
+        error: "No HTML generated"
+      });
+    }
+
+    html = html
+      .replace(/```html/gi, "")
+      .replace(/```/g, "")
+      .trim();
 
     return res.status(200).json({
       code: html
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Groq Error:", error);
 
     return res.status(500).json({
       error: error.message
     });
   }
-}    
+        }
