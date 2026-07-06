@@ -58,28 +58,22 @@ Footer.
         }
       ]
     });
-
-    let html = completion.choices[0].message.content.trim();
-
-    html = html
-      .replace(/```html/gi, "")
-      .replace(/```/g, "")
-      .trim();
-       if (!html.toLowerCase().startsWith("<!doctype html")) {
+        if (!html.toLowerCase().includes("<!doctype html")) {
       html = `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Generated Website</title>
+<title>AI Generated Website</title>
 <style>
+*{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:Arial,sans-serif;
-  max-width:900px;
+  line-height:1.6;
+  max-width:1200px;
   margin:40px auto;
   padding:20px;
-  line-height:1.7;
 }
 </style>
 </head>
@@ -94,12 +88,10 @@ ${html}
     });
 
   } catch (error) {
-
     console.error("Groq Error:", error);
 
     return res.status(500).json({
       error: error.message || "Failed to generate website"
     });
-
   }
-          } 
+        }
