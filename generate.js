@@ -120,4 +120,6 @@ ${html}
         error: error.message || "Failed to generate website"
     });
 
-      }
+}
+
+}
