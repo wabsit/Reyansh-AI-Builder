@@ -114,13 +114,10 @@ ${html}
     });
 } catch (error) {
 
-    console.error(error);
+    console.error("Groq Error:", error);
 
-    alert("Error: " + error.message);
+    return res.status(500).json({
+        error: error.message || "Failed to generate website"
+    });
 
-    document.getElementById("preview").srcdoc =
-    "<h2 style='color:red;text-align:center'>" +
-    error.message +
-    "</h2>";
-
-          }
+      }
