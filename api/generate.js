@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
   if (req.method !== "POST") {
     return res.status(405).json({
-      error: "Method Not Allowed"
+      error: "Method Not Allowed",
     });
   }
 
@@ -18,10 +18,10 @@ export default async function handler(req, res) {
 
     if (!prompt) {
       return res.status(400).json({
-        error: "Prompt is required"
+        error: "Prompt is required",
       });
     }
-        const completion = await groq.chat.completions.create({
+    const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       temperature: 0.3,
       messages: [
@@ -73,11 +73,11 @@ Footer.
 <title>AI Generated Website</title>
 <style>
 body{
-  font-family:Arial,sans-serif;
-  max-width:1200px;
-  margin:40px auto;
-  padding:20px;
-  line-height:1.6;
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  line-height: 1.6;
 }
 </style>
 </head>
@@ -85,19 +85,16 @@ body{
 ${html}
 </body>
 </html>`;
-          return res.status(200).json({
+      }
+        return res.status(200).json({
       code: html
     });
 
   } catch (error) {
-
     console.error("Groq Error:", error);
 
     return res.status(500).json({
       error: error.message || "Failed to generate website"
     });
-
   }
-
-}
-  }
+          }
