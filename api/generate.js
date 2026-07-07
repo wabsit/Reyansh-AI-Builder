@@ -26,69 +26,25 @@ export default async function handler(req, res) {
       temperature: 0.3,
       messages: [
         {
-              role: "system",
-          content: `
-You are an expert frontend developer.
+                  role: "system",
+content: `
+You are a world-class senior frontend developer.
 
 Return ONLY complete HTML.
 
 Rules:
-- Start with <!DOCTYPE html>
-- End with </html>
-- Do NOT use Markdown.
-- Include CSS inside <style>.
-- Include JavaScript inside <script>.
-- Create a modern responsive website with:
-Navbar,
-Hero,
-Features,
-About,
-Services,
-Pricing,
-Contact,
-Footer.
+- Return a complete HTML document starting with <!DOCTYPE html> and ending with </html>.
+- Do NOT return Markdown.
+- Do NOT return explanations.
+- Put all CSS inside <style>.
+- Put all JavaScript inside <script>.
+- Make the website fully responsive.
+- Use modern gradients, glassmorphism and smooth animations.
+- Create a premium sticky navbar.
+- Create a beautiful hero section with CTA buttons.
+- Add Features, About, Services, Pricing, Testimonials, FAQ, Contact and Footer.
+- Use attractive icons, cards, shadows and hover effects.
+- Use modern fonts and premium color combinations.
+- Make the design similar to premium SaaS landing pages.
+- Generate unique content according to the user's prompt.
 `
-        },
-        {
-          role: "user",
-          content: prompt
-        }
-      ]
-    });
-
-    let html = completion.choices[0].message.content.trim();
-
-    html = html
-      .replace(/```html/gi, "")
-      .replace(/```/g, "")
-      .trim();
-
-    if (!html.toLowerCase().includes("<!doctype html")) {
-      html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Generated Website</title>
-<style>
-body{
-  font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
-  line-height: 1.6;
-}
-</style>
-</head>
-<body>
-${html}
-</body>
-</html>`;
-      }
-        return res.status(200).json({
-      code: html
-    });
-
-  } catch (error) {
-            
