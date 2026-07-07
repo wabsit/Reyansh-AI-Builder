@@ -6,10 +6,12 @@
     <title>💎 Reyansh AI Builder</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header class="header">
     <div class="container">
+
         <h1>💎 Reyansh AI Builder</h1>
 
         <nav>
@@ -19,6 +21,7 @@
             <a href="#">Pricing</a>
             <a href="#">Contact</a>
         </nav>
+
     </div>
 </header>
 
@@ -43,16 +46,39 @@
 
 <section class="container">
 
-    <h2>Live Preview</h2>
+<div class="workspace">
 
-    <iframe
-        id="preview"
-        width="100%"
-        height="600">
-    </iframe>
+<div class="sidebar">
+
+<h3>📁 Project Files</h3>
+
+<button onclick="openFile('html')">📄 index.html</button>
+
+<button onclick="openFile('css')">🎨 style.css</button>
+
+<button onclick="openFile('js')">⚡ script.js</button>
+
+</div>
+
+<div class="editor">
+
+<h3>💻 Code Editor</h3>
+
+<textarea id="codeEditor" spellcheck="false"></textarea>
+
+</div>
+
+<div class="preview">
+
+<h3>👁 Live Preview</h3>
+
+<iframe id="preview" width="100%" height="600"></iframe>
+
+</div>
+
+</div>
 
 </section>
-
 <section class="features container">
 
     <div class="card">
@@ -66,6 +92,11 @@
     </div>
 
     <div class="card">
+        <h3>📁 File Explorer</h3>
+        <p>Edit HTML, CSS and JavaScript files.</p>
+    </div>
+
+    <div class="card">
         <h3>☁️ Deploy</h3>
         <p>Deploy to GitHub and Vercel.</p>
     </div>
@@ -73,10 +104,25 @@
 </section>
 
 <footer>
-
     <p>© 2026 Reyansh AI Builder. All Rights Reserved.</p>
-
 </footer>
+
+<script>
+function openFile(file){
+    document.getElementById("codeEditor").value =
+    "// " + file + " file will appear here.";
+}
+
+function copyCode(){
+    navigator.clipboard.writeText(
+        document.getElementById("codeEditor").value
+    );
+}
+
+function downloadProject(){
+    alert("Download feature coming soon.");
+}
+</script>
 
 <script src="script.js"></script>
 
