@@ -18,6 +18,10 @@ async function generate() {
         });
 
         const data = await response.json();
+        if (!response.ok) {
+    alert(JSON.stringify(data));
+    return;
+        }
 
         console.log(data);
 
