@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       temperature: 0.3,
       messages: [
         {
-          role: "system",
+              role: "system",
           content: `
 You are an expert frontend developer.
 
@@ -91,10 +91,4 @@ ${html}
     });
 
   } catch (error) {
-    console.error("Groq Error:", error);
-
-    return res.status(500).json({
-      error: error.message || "Failed to generate website"
-    });
-  }
-          }
+            
