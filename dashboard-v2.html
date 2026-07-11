@@ -1,1 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>💎 Reyansh AI Builder V2</title>
+
+<link rel="stylesheet" href="style-v2.css">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+<div class="logo">
+
+💎 Reyansh AI Builder V2
+
+</div>
+
+<nav>
+
+<a href="#">Dashboard</a>
+
+<a href="#">Templates</a>
+
+<a href="#">Projects</a>
+
+<a href="#">Deploy</a>
+
+<a href="#">Settings</a>
+
+</nav>
+
+</header>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<h3>📁 Explorer</h3>
+
+<ul>
+
+<li id="htmlFile">index.html</li>
+
+<li id="cssFile">style.css</li>
+
+<li id="jsFile">script.js</li>
+
+<li>assets</li>
+
+<li>images</li>
+
+<li>icons</li>
+
+</ul>
+
+<hr>
+
+<h3>⚡ Templates</h3>
+
+<ul>
+
+<li>Gym</li>
+
+<li>E-commerce</li>
+
+<li>Business</li>
+
+<li>Portfolio</li>
+
+<li>Landing Page</li>
+
+</ul>
+
+</aside>
+
+<main class="main">
+
+<section class="chat">
+
+<h2>🤖 AI Prompt</h2>
+
+<textarea
+id="prompt"
+placeholder="Describe your website..."></textarea>
+
+<br><br>
+
+<button onclick="generate()">
+
+🚀 Generate Website
+
+</button>
+
+</section>
+<section class="editor-section">
+
+<div class="editor-header">
+
+<h2>📝 Code Editor</h2>
+
+<div class="editor-actions">
+
+<button id="htmlTab">HTML</button>
+
+<button id="cssTab">CSS</button>
+
+<button id="jsTab">JavaScript</button>
+
+<button id="downloadBtn">⬇ Download</button>
+
+<button id="copyBtn">📋 Copy</button>
+
+</div>
+
+</div>
+
+<textarea
+id="codeEditor"
+placeholder="Generated code will appear here...">
+</textarea>
+
+</section>
+
+<section class="preview-section">
+
+<div class="preview-header">
+
+<h2>🌐 Live Preview</h2>
+
+<button id="refreshPreview">
+🔄 Refresh
+</button>
+
+</div>
+
+<iframe
+id="preview">
+</iframe>
+
+</section>
+
+</main>
+
+  </div>
+  <section class="status-bar">
+
+<div>
+
+🟢 AI Status :
+<span id="aiStatus">Ready</span>
+
+</div>
+
+<div>
+
+⚡ Reyansh AI Builder V2
+
+</div>
+
+</section>
+
+<footer class="footer">
+
+<p>
+
+© 2026 Reyansh AI Builder V2
+
+</p>
+
+<p>
+
+Powered by Groq AI • Vercel • HTML • CSS • JavaScript
+
+</p>
+
+</footer>
+
+<div id="loadingScreen" class="loading-screen">
+
+<div class="loader"></div>
+
+<h2>Generating Website...</h2>
+
+<p>Please wait...</p>
+
+</div>
+
+<script src="script-v2.js"></script>
+
+</body>
+
+  </html>
